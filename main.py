@@ -13,13 +13,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
+
 import webapp2
+from receivetext import *
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.write('So, who\'s home?')
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/receivetext', ReceiveText)
 ], debug=True)
