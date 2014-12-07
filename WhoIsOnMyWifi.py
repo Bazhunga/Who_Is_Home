@@ -10,7 +10,7 @@ import urllib
 import urllib2
 from keys import *
 
-def main():
+def go():
     d_knownpeople = {}
     a_currentusers = []
 
@@ -21,7 +21,6 @@ def main():
     print d_currentusers
 
     update_cloud(d_currentusers)
-
 
 # Read in and create a dictionary of people and their ip addresses
 def read_known_people():
@@ -65,7 +64,3 @@ def update_cloud(d_currentusers):
 
 # def find_mac (userMac):
     # for m in macAddresses:
-
-
-if __name__ == "__main__":
-    main()
