@@ -18,13 +18,16 @@ class ReceiveText(webapp2.RequestHandler):
 		jsonString = result.read()
 		response = self.getPeopleStatus(self, jsonString)
 
+		response = '\n' + response
 		print response
-		# # self.getPeopleStatus(self, jsonString)
-		# r = twiml.Response()
-		# try:
-		# 	r.message("HEY MAN")	
-		# except:
-		# 	pass
+
+		r = twiml.Response()
+		try:
+			r.message(response)	
+		except:
+			r.message(str(json_result))
+		self.response.headers['Content-Type'] = 'text/xml'
+		self.response.write(str(r))
 
 	@staticmethod
 	def getPeopleStatus(self, jsonString):
