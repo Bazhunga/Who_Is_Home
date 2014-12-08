@@ -32,8 +32,8 @@ class ReceiveText(webapp2.RequestHandler):
 	@staticmethod
 	def getPeopleStatus(self, jsonString):
 		jsonObj = json.loads(jsonString)
-		#Get the last 10 minutes of data, or the entire list, whichever is smaller
-		length = min (40, len(jsonObj))
+		#Get the last 5 minutes of data, or the entire list, whichever is smaller
+		length = min (20, len(jsonObj))
 		#Dictionary and associated amount of times active in last 10 minutes
 		d_status = {}
 
