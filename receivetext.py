@@ -16,7 +16,9 @@ class ReceiveText(webapp2.RequestHandler):
 		request = urllib2.Request(dataurl)
 		result = urllib2.urlopen(request)
 		jsonString = result.read()
-		self.getPeopleStatus(self, jsonString)
+		response = self.getPeopleStatus(self, jsonString)
+
+		print response
 		# # self.getPeopleStatus(self, jsonString)
 		# r = twiml.Response()
 		# try:
@@ -27,5 +29,40 @@ class ReceiveText(webapp2.RequestHandler):
 	@staticmethod
 	def getPeopleStatus(self, jsonString):
 		jsonObj = json.loads(jsonString)
-		print jsonObj[0]
-		
+		#Get the last 10 minutes of data, or the entire list, whichever is smaller
+		length = min (40, len(jsonObj))
+		#Dictionary and associated amount of times active in last 10 minutes
+		d_status = {}
+
+		#Iterate through all 40 data points
+		for x in range (0, length-1):
+			#Iterate through dictionary keys to get status of people
+			for key in jsonObj[x]:
+				#Skip timestamps
+				if key != "timestamp":
+					#Create a new 
+					if key not in d_status:
+						#Add new person
+						d_status[key] = int(jsonObj[x][key])
+					else:
+						#Add to person's active time
+						d_status[key] += int(jsonObj[x][key])
+		response = self.constructResponse(self, d_status)
+
+		return response
+
+
+	@staticmethod
+	def constructResponse(self, d_status):
+		activePeople = []
+		for key in d_status:
+			if d_status[key] != 0:
+				#Append to array people that have been active in the past 10 minutes
+				activePeople.append(key)
+
+
+		response = "These people have been active in the house in the past 10 minutes: \n"
+		for peeps in activePeople:
+			response+=(peeps + "\n")
+
+		return response
