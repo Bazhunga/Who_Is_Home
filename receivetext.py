@@ -5,6 +5,7 @@ import urllib2
 from twilio import twiml
 import sys
 import os
+from keys import *
 
 import json
 import keys
@@ -12,7 +13,7 @@ import keys
 class ReceiveText(webapp2.RequestHandler):
 	def post(self):
 		fromNumber = cgi.escape(self.request.get('From'))
-		dataurl = "https://data.sparkfun.com/output/lz994mazZ0tXV13qxQM1.json"
+		dataurl = "https://data.sparkfun.com/output/"+pubKey+".json"
 		request = urllib2.Request(dataurl)
 		result = urllib2.urlopen(request)
 		jsonString = result.read()
@@ -64,7 +65,7 @@ class ReceiveText(webapp2.RequestHandler):
 				activePeople.append(key)
 
 
-		response = "These people have been active in the house in the past 10 minutes: \n"
+		response = "These people have been active in the house in the past minute: \n"
 		for peeps in activePeople:
 			response+=(peeps + "\n")
 

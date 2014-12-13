@@ -55,7 +55,7 @@ def update_cloud(d_currentusers):
     kevinStatus = d_currentusers["Kevin_Zhu"]
     ruiStatus = d_currentusers["Rui"]
     rahulStatus = d_currentusers["Rahul"]
-    url = "http://data.sparkfun.com/input/"+pubKey+"?private_key="+str(privKey)+\
+    url = "http://data.sparkfun.com/input/"+str(pubKey)+"?private_key="+str(privKey)+\
            "&david="+str(davidStatus)+"&kevin="+str(kevinStatus)+"&rui="+str(ruiStatus)+"&rahul="+str(rahulStatus)
     request = urllib2.Request(url)
     result = urllib2.urlopen(request)
